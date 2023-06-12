@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<h1 class="text-center mt-3">Welcome to Sign Up page</h1>
+<section class="container mt-5 d-flex justify-content-center"> 
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            {% for f in form.non_field_errors%}
+                <p class="bg-danger text-white">{{f}}</p>
+            {% endfor %}
+        {% endif %}
+            {% for f in form  %}
+            <div class="row my-4">
+                <div class="col-4">
+                    {{f.label_tag}}
+                </div>
+                <div class="col-8">
+                    {{f}}
+                   <span class="text-danger">{{f.errors |striptags}}</span>
+                </div>
+            </div>
+            {% endfor %}
+        <button class="btn btn-primary">Submit</button>
+        <br><br>
+        {% if messages %}
+            {% for m in messages  %}
+            <p {% if m.tags %} class="text-{{m.tags}} fw-bold" {% endif %}>{{m}}</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+
+</section>
+<div class="container d-flex justify-content-center">
+    <p>Already have an account? <a class="btn btn-info" href="{% url 'login' %}">Login</a></p>
+</div>
+
+{% endblock content %}
+
